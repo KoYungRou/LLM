@@ -78,3 +78,16 @@ async def select_pdfcontent(pdf_name: str = Query(..., description="Name of the 
     except Exception as e:
         logger.error(f"Error selecting PDF: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error selecting PDF content: {str(e)}")
+    
+@router.get("/list_pdfs")
+async def list_pdfs() -> Dict[str, Any]:
+    """
+    List all previously processed PDF markdown files.
+    """
+    try:
+        pdf_files = [f for f in os.listdir(PDF_STORAGE_DIR) if f.endswith(".md")]
+        pdf_names = [os.path.splitext(f)[0] for f in pdf_files]
+        return {"pdfs": pdf_names}
+    except Exception as e:
+        logger.error(f"Error listing PDFs: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error listing PDFs: {str(e)}")
