@@ -8,6 +8,8 @@ from endpoints.select_pdfcontent import router as select_router
 from endpoints.upload_pdf import router as upload_router
 from endpoints.summarize import router as summarize_router
 from endpoints.ask_question import router as question_router
+from endpoints import select_pdfcontent
+
 
 # Create the FastAPI app
 app = FastAPI(
@@ -30,6 +32,7 @@ app.include_router(select_router)
 app.include_router(upload_router)
 app.include_router(summarize_router)
 app.include_router(question_router)
+app.include_router(select_pdfcontent.router)
 
 @app.get("/")
 async def root():
